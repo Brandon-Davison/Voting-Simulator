@@ -10,9 +10,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import brandon.davison.com.voting.users.Voter;
+import brandon.davison.com.voting.users.VoterEntryModel;
 
 public class Database {
 
@@ -23,14 +26,18 @@ public class Database {
         ids = new ArrayList<>();
         db = FirebaseDatabase.getInstance();
 
-        Voter newVoter = new Voter(UUID.randomUUID(), "brandon");
+        Voter newVoter = new Voter(UUID.randomUUID(), "brandon", false);
 
+        VoterEntryModel entry2 = new VoterEntryModel(newVoter.getName(), newVoter.hasVoted());
+
+        Map<String, Object> entry = new HashMap<>();
+        entry.put("name", newVoter.getName());
+        entry.put("hasVoted", newVoter.hasVoted());
 
         /* Write test */
         DatabaseReference ref = db.getReference();
-        ref.setValue(newVoter);
 
-        ref.child("voters").child(newVoter.getId().toString()).setValue(newVoter);
+        ref.child("voters").child(newVoter.getId().toString()).setValue(newVoter.getEntry());
 
         /* Read test */
 
