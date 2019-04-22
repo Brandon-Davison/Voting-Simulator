@@ -20,24 +20,14 @@ import brandon.davison.com.voting.users.VoterEntryModel;
 public class Database {
 
     private ArrayList<UUID> ids;
-    private FirebaseDatabase db;
 
     public Database() {
         ids = new ArrayList<>();
-        db = FirebaseDatabase.getInstance();
-
-        Voter newVoter = new Voter(UUID.randomUUID(), "brandon", false);
-
-        VoterEntryModel entry2 = new VoterEntryModel(newVoter.getName(), newVoter.hasVoted());
-
-        Map<String, Object> entry = new HashMap<>();
-        entry.put("name", newVoter.getName());
-        entry.put("hasVoted", newVoter.hasVoted());
-
+        
         /* Write test */
-        DatabaseReference ref = db.getReference();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-        ref.child("voters").child(newVoter.getId().toString()).setValue(newVoter.getEntry());
+        putVoter("Brandon");
 
         /* Read test */
 
@@ -53,6 +43,14 @@ public class Database {
             }
         });
 
+    }
+
+    // Writes a VoterEntryModel to the database TODO: pull ID from generated UUIDs on db
+    public void putVoter(String name) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        Voter voter = new Voter(UUID.randomUUID(), name);
+        ref.child("voters").child(voter.getId().toString()).setValue(voter.getEntry());
     }
 
     // Generates ids for a new election

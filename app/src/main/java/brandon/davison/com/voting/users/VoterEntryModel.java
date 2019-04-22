@@ -14,6 +14,7 @@ public class VoterEntryModel {
         this.name = name;
         this.hasVoted = hasVoted;
 
+        // create and update new Entry
         entry = new HashMap<>();
         entry.put("name", name);
         entry.put("hasVoted", hasVoted);

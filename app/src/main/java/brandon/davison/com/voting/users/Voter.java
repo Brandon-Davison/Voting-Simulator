@@ -1,7 +1,5 @@
 package brandon.davison.com.voting.users;
 
-import com.google.firebase.database.PropertyName;
-
 import java.util.Map;
 import java.util.UUID;
 
@@ -14,12 +12,12 @@ public class Voter {
     // Used for database put and get calls
     private VoterEntryModel model;
 
-    public Voter(UUID id, String name, boolean hasVoted) {
+    public Voter(UUID id, String name) {
         this.id = id;
         this.name = name;
-        this.hasVoted = hasVoted;
+        hasVoted = false;
 
-        model = new VoterEntryModel(name, hasVoted);
+        model = new VoterEntryModel(name, false);
     }
 
     public String getName() {
