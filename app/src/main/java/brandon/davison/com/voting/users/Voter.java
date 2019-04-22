@@ -36,7 +36,7 @@ public class Voter {
 
     public void setVoted(boolean hasVoted) {
         this.hasVoted = hasVoted;
-        // TODO: updatem model
+        model.updateHasVoted(hasVoted);
     }
 
     public Map<String, Object> getEntry() {
