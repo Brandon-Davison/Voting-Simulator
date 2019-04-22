@@ -22,30 +22,6 @@ public class Database {
     public Database() {
         ids = new ArrayList<>();
 
-        readSettingsFromDb();
-    }
-
-    public void readSettingsFromDb() {
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-
-        DatabaseReference settingsRef = ref.child("settings");
-        Log.d("SDFLSDFSsf", "read from db: " + settingsRef.getDatabase());
-
-        settingsRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-
-                Log.d("SDFLSDFSsf", "read from db: " + dataSnapshot.getValue());
-                Log.d("SDFLSDFSsf", "read from db: " + dataSnapshot.child("votesAvailable").getValue());
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
     // Writes a VoterEntryModel to the database TODO: pull ID from generated UUIDs on db

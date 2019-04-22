@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import brandon.davison.com.voting.R;
 import brandon.davison.com.voting.users.Admin;
+import brandon.davison.com.voting.voting.VoteSettings;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         Admin admin = new Admin(adminUserName, adminPassword);
 
         Database db = new Database();
+        VoteSettings settings = new VoteSettings();
 
         /* LoginActivity onClick listeners */
         login_id.setOnClickListener(new View.OnClickListener() {

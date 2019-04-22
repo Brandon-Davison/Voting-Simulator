@@ -17,37 +17,64 @@ public class VoteSettings {
 
     private Date[] dateRange; // TODO: implement dateRange on voting
 
+    private static int votesAvailable, votesToWin;
+    private static boolean started;
+    private static HashMap<String, Object> model;
 
-    private int votesAvailable, votesToWin;
-    private boolean started;
-    private HashMap<String, Object> model;
+    // Indicates if settings could be read from db on startup
+     static boolean settingsRead;
 
-    public VoteSettings(int votesToWin, int votesAvailable, boolean started) {
-        this.votesToWin = votesToWin;
-        this.votesAvailable = votesAvailable;
-        this.started = started;
-
+    public VoteSettings() {
         model = new HashMap<>();
         readSettingsFromDb();
+
+        Log.d("SettingTesting", "Settings read: " + settingsRead);
+
+
+        if (settingsRead) {
+            try {
+                this.votesAvailable = Integer.valueOf(model.get("votesAvailable").toString());
+                Log.d("SettingTesting", "db type sdddddddddddddderror");
+
+            } catch (NullPointerException e) {
+                Log.d("SettingTesting", "db type error");
+            }
+
+        }
+        Log.d("SettingTesting", "Moment of truth: " + votesToWin);
     }
 
-    public void readSettingsFromDb() {
+    private void readSettingsFromDb() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-        DatabaseReference settingsRef = ref.child("settings");
-        Log.d("SDFLSDFSsf", "read from db: " + settingsRef.getDatabase());
+        final DatabaseReference settingsRef = ref.child("settings");
+        Log.d("SettingTesting", "read from db: " + settingsRef.getDatabase());
 
         settingsRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("SDFLSDFSsf", "read from db: " + dataSnapshot.getValue());
+                model.put("votesAvailable", dataSnapshot.child("votesAvailable").getValue());
+                model.put("votesToWin", dataSnapshot.child("votesToWin").getValue());
+                model.put("started", dataSnapshot.child("started").getValue());
+
+                Log.d("SettingTesting", "MapVal: " + model.get("started"));
+                Log.d("SettingTesting", "Votes to win: " + model.get("votesToWin"));
+                Log.d("SettingTesting", "read from db: " + dataSnapshot.getValue());
+
+                settingsRead = true;
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                settingsRead = false;
             }
         });
+        Log.d("SettingTesting", "Settings read in method: " + settingsRead);
+
+    }
+
+    public boolean getSettingsRead() {
+        return settingsRead;
     }
 
     public HashMap<String, Object> getModel() {
