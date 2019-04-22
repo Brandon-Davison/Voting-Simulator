@@ -1,7 +1,5 @@
 package brandon.davison.com.voting;
 
-import android.Manifest;
-import android.os.storage.StorageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;

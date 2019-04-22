@@ -85,7 +85,7 @@ public class Login extends AppCompatActivity {
         regiser_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
     }
