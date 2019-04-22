@@ -9,7 +9,7 @@ import android.widget.EditText;
 import brandon.davison.com.voting.R;
 import brandon.davison.com.voting.users.Admin;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     // Admin (settings are going to be read in either from database variables, or setup page in app through admin login)
     // Which ever one is easier
@@ -21,7 +21,7 @@ public class Login extends AppCompatActivity {
     private Button login_btn;
 
     private EditText register_id, register_password, register_name;
-    private Button regiser_btn;
+    private Button register_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,9 @@ public class Login extends AppCompatActivity {
 
         Admin admin = new Admin(adminUserName, adminPassword);
 
-        /* Login onClick listeners */
+        Database db = new Database();
+
+        /* LoginActivity onClick listeners */
         login_id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +84,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        regiser_btn.setOnClickListener(new View.OnClickListener() {
+        register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -98,6 +100,6 @@ public class Login extends AppCompatActivity {
         register_id = findViewById(R.id.register_id_edit_text);
         register_password = findViewById(R.id.register_enter_password);
         register_name = findViewById(R.id.register_name_edit_text);
-        regiser_btn = findViewById(R.id.register_btn);
+        register_btn = findViewById(R.id.register_btn);
     }
 }

@@ -1,12 +1,14 @@
 package brandon.davison.com.voting.users;
 
+import java.util.UUID;
+
 public class Voter {
 
-    private int id;
+    private UUID id;
     private String name;
     private boolean hasVoted;
 
-    public Voter(int id, String name) {
+    public Voter(UUID id, String name) {
         this.id = id;
         this.name = name;
         hasVoted = false;
@@ -16,7 +18,7 @@ public class Voter {
         return name;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
