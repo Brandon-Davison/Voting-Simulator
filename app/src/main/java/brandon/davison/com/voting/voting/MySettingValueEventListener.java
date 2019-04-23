@@ -10,28 +10,26 @@ import com.google.firebase.database.ValueEventListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MySettingValueEventListener implements ValueEventListener {
 
-    private int votesToWin = 0;
     private List<PropertyChangeListener> listener = new ArrayList<>();
 
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        //model.put("votesAvailable", dataSnapshot.child("votesAvailable").getValue());
-        //model.put("votesToWin", dataSnapshot.child("votesToWin").getValue());
-        //model.put("started", dataSnapshot.child("started").getValue());
+        try {
+            String votesToWin = dataSnapshot.child("votesToWin").getValue().toString();
+            String votesAvailable = dataSnapshot.child("votesAvailable").getValue().toString();
+            String started = dataSnapshot.child("started").getValue().toString();
 
-        setVotesToWin(55);
-        notifyListeners(this, "votesToWin", 0, 55);
-        Log.d("SettingTesting", "In listener: " + votesToWin);
-
-        //Log.d("SettingTesting", "MapVal: " + model.get("started"));
-        //Log.d("SettingTesting", "Votes to win: " + model.get("votesToWin"));
-        //Log.d("SettingTesting", "Votes available: " + model.get("votesAvailable"));
-        //Log.d("SettingTesting", "read from db: " + dataSnapshot.getValue());
+            notifyListeners(this, "votesToWin", "0", votesToWin);
+            notifyListeners(this, "votesAvailable", "0", votesAvailable);
+            notifyListeners(this, "started", "false", started);
+            Log.d("SettingTesting", "Values from db: " + votesToWin + ", " + votesAvailable + ", " + started);
+        } catch (Exception e) {
+            Log.e("SettingTesting", "Type error from db");
+        }
     }
 
     @Override
@@ -39,7 +37,7 @@ public class MySettingValueEventListener implements ValueEventListener {
 
     }
 
-    private void notifyListeners(Object object, String property, int oldValue, int newValue) {
+    private void notifyListeners(Object object, String property, String oldValue, String newValue) {
         for (PropertyChangeListener name : listener) {
             name.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
         }
@@ -47,15 +45,6 @@ public class MySettingValueEventListener implements ValueEventListener {
 
     public void addChangeListener(PropertyChangeListener newListener) {
         listener.add(newListener);
-    }
-
-    public void setVotesToWin(int a) {
-        Log.d("SettingTesting", "In votesToWin: " + a);
-        this.votesToWin = a;
-    }
-
-    public int getVotesToWin() {
-        return votesToWin;
     }
 
 }

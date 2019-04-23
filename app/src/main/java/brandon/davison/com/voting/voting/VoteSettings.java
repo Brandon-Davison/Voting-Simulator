@@ -10,18 +10,15 @@ import java.beans.PropertyChangeListener;
 import java.util.Date;
 import java.util.HashMap;
 
-
-// TODO: when data is queried, it takes some milliseconds and runs in a Async.
-// TODO   so when the data from this class is accessed, the query is still being performed.
 public class VoteSettings implements PropertyChangeListener {
 
-    private Date[] dateRange; // TODO: implement dateRange on voting
+    private Date[] dateRange;
 
     private int votesAvailable, votesToWin;
     private boolean started;
     private HashMap<String, Object> model;
 
-    MySettingValueEventListener settingValueEventListener;
+    private MySettingValueEventListener settingValueEventListener;
 
     public VoteSettings() {
         settingValueEventListener = new MySettingValueEventListener();
@@ -33,8 +30,18 @@ public class VoteSettings implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        votesToWin = Integer.valueOf(evt.getNewValue().toString());
-        Log.d("SettingTesting", "Property changed: " + votesToWin);
+        if (evt.getPropertyName().equals("votesToWin")) {
+            votesToWin = Integer.valueOf(evt.getNewValue().toString());
+            Log.d("SettingTesting", "Property changed: " + votesToWin);
+        }
+        if (evt.getPropertyName().equals("votesAvailable")) {
+            votesAvailable =  Integer.valueOf(evt.getNewValue().toString());
+            Log.d("SettingTesting", "Property changed: " + votesAvailable);
+        }
+        if (evt.getPropertyName().equals("started")) {
+            started  = Boolean.valueOf(evt.getNewValue().toString());
+            Log.d("SettingTesting", "Property changed: " + started);
+        }
     }
 
     private void readSettingsFromDb() {
@@ -43,8 +50,6 @@ public class VoteSettings implements PropertyChangeListener {
 
 
         settingsRef.addListenerForSingleValueEvent(settingValueEventListener);
-
-        Log.d("SettingTesting", "In vote settings: " + settingValueEventListener.getVotesToWin());
     }
 
     public HashMap<String, Object> getModel() {

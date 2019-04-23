@@ -5,27 +5,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import brandon.davison.com.voting.R;
 import brandon.davison.com.voting.voting.VoteSettings;
 
 public class LoginActivity extends AppCompatActivity {
 
-    int temp;
-
-    // Admin (settings are going to be read in either from database variables, or setup page in app through admin login)
-    // Which ever one is easier
-    private static final String adminUserName = "Admin";
-    private static final int adminPassword = 123;
-
-    // Regular user (voter)
+    // Login UI
     private EditText login_id, login_password;
     private Button login_btn;
 
+    // Sign up UI
     private EditText register_id, register_password, register_name;
     private Button register_btn;
 
@@ -33,15 +23,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        setupViews();
-
-       // VoteSettings settings = new VoteSettings();
-      //  Log.d("SettingTesting", "In activity: " + settings.getVotesToWin());
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference settingsRef = ref.child("settings");
-
-        final TextView textView = findViewById(R.id.textview);
+        setupViews(); // connect components to the IDs provided in the xml
 
         VoteSettings voteSettings = new VoteSettings();
 
@@ -102,10 +84,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    public int wat() {
-        return temp;
     }
 
     private void setupViews() {
