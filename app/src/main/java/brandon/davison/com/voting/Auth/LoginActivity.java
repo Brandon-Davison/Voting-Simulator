@@ -2,6 +2,7 @@ package brandon.davison.com.voting.Auth;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,13 +20,28 @@ public class LoginActivity extends AppCompatActivity {
     private EditText register_id, register_password, register_name;
     private Button register_btn;
 
+    // Non-UI variables
+    IdManager idManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setupViews(); // connect components to the IDs provided in the xml
 
-        VoteSettings voteSettings = new VoteSettings();
+        final VoteSettings voteSettings = new VoteSettings();
+
+        // This is really bad but it works so oh well for now practice
+        Thread waitForSettings = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (voteSettings.getVotesToWin() == 0) { }
+                Log.d("SettingTesting", "Login Activity settings ready");
+
+                idManager = new IdManager(voteSettings);
+            }
+        });
+        waitForSettings.start();
 
         /* LoginActivity onClick listeners */
         login_id.setOnClickListener(new View.OnClickListener() {
