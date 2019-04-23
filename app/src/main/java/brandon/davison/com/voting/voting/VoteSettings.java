@@ -48,7 +48,6 @@ public class VoteSettings implements PropertyChangeListener {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference settingsRef = ref.child("settings");
 
-
         settingsRef.addListenerForSingleValueEvent(settingValueEventListener);
     }
 

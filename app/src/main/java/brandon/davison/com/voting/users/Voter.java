@@ -1,5 +1,6 @@
 package brandon.davison.com.voting.users;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -8,24 +9,37 @@ public class Voter {
     private UUID id;
     private String name;
     private boolean hasVoted;
+    private String password;
 
     // Used for database put and get calls
-    private VoterEntryModel model;
 
-    public Voter(UUID id, String name) {
+    private Map<String, Object> model;
+
+    public Voter(UUID id, String name, String password) {
+        model = new HashMap<>();
+
         this.id = id;
         this.name = name;
         hasVoted = false;
+        this.password = password;
 
-        model = new VoterEntryModel(name, false);
+        // Update model
+        model.put("id", id.toString());
+        model.put("name", name);
+        model.put("password", password);
+        model.put("hasVoted", false);
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public UUID getId() {
-        return id;
+    public String getPassword() {
+        return password;
     }
 
     public boolean hasVoted() {
@@ -34,11 +48,16 @@ public class Voter {
 
     public void setVoted(boolean hasVoted) {
         this.hasVoted = hasVoted;
-        model.updateHasVoted(hasVoted);
+        model.put("hasVoted", hasVoted);
     }
 
-    public Map<String, Object> getEntry() {
-        return model.getEntry();
+    public void setPassword(String password) {
+        this.password = password;
+        model.put("password", password);
+    }
+
+    public Map<String, Object> getModel() {
+        return model;
     }
 
 }

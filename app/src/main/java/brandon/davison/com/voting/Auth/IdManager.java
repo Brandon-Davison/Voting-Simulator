@@ -1,5 +1,10 @@
 package brandon.davison.com.voting.Auth;
 
+import android.util.Log;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -33,12 +38,18 @@ public class IdManager {
     private void generateIds(int numberIds) {
         for (int i = 0; i < numberIds; i++) {
             ids.add(UUID.randomUUID());
+            Log.d("idTesting", "Id " + (i +1) + ": " + ids.get(i).toString());
         }
+        writeIds();
     }
 
     // Write generated IDS to database
-    private void writeIds(ArrayList<UUID> ids) {
+    private void writeIds() {
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("ids");
 
+        for (int i = 1; i <= ids.size(); i++) {
+            db.child(String.valueOf(i)).setValue(ids.get(i));
+        }
     }
 
 }
