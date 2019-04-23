@@ -5,12 +5,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import brandon.davison.com.voting.R;
-import brandon.davison.com.voting.users.Admin;
 import brandon.davison.com.voting.voting.VoteSettings;
 
 public class LoginActivity extends AppCompatActivity {
+
+    int temp;
 
     // Admin (settings are going to be read in either from database variables, or setup page in app through admin login)
     // Which ever one is easier
@@ -30,10 +35,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setupViews();
 
-        Admin admin = new Admin(adminUserName, adminPassword);
+       // VoteSettings settings = new VoteSettings();
+      //  Log.d("SettingTesting", "In activity: " + settings.getVotesToWin());
 
-        Database db = new Database();
-        VoteSettings settings = new VoteSettings();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference settingsRef = ref.child("settings");
+
+        final TextView textView = findViewById(R.id.textview);
+
+        VoteSettings voteSettings = new VoteSettings();
 
         /* LoginActivity onClick listeners */
         login_id.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +102,10 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public int wat() {
+        return temp;
     }
 
     private void setupViews() {

@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".Auth.LoginActivity">
 
+<TextView
+    android:id="@+id/textview"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="temp"
+    android:textSize="46sp"/>
+
 
     <EditText
         android:id="@+id/login_id_edit_text"
