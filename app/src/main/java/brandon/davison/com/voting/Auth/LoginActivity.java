@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 while (voteSettings.getVotesToWin() == 0) { }
-                Log.d("SettingTesting", "Login Activity settings ready");
+                Log.d("SettingTesting", "Login Activity settings ready: ");
 
                 idManager = new IdManager(voteSettings);
             }

@@ -51,6 +51,10 @@ public class VoteSettings implements PropertyChangeListener {
         settingsRef.addListenerForSingleValueEvent(settingValueEventListener);
     }
 
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
+
     public HashMap<String, Object> getModel() {
         return model;
     }

@@ -6,16 +6,15 @@ import java.util.UUID;
 
 public class Voter {
 
-    private UUID id;
+    private String id;
     private String name;
     private boolean hasVoted;
     private String password;
 
     // Used for database put and get calls
-
     private Map<String, Object> model;
 
-    public Voter(UUID id, String name, String password) {
+    public Voter(String id, String name, String password) {
         model = new HashMap<>();
 
         this.id = id;
@@ -24,13 +23,13 @@ public class Voter {
         this.password = password;
 
         // Update model
-        model.put("id", id.toString());
+        model.put("id", id);
         model.put("name", name);
         model.put("password", password);
         model.put("hasVoted", false);
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
