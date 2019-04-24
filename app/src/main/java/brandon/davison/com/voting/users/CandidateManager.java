@@ -9,15 +9,20 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import brandon.davison.com.voting.voting.VoteSettings;
 
-public class CandidateManager {
+public class CandidateManager implements PropertyChangeListener {
 
     private ArrayList<Candidate> candidates = new ArrayList<>();
+    private CandidateEventListener listener = new CandidateEventListener();
 
     public CandidateManager(VoteSettings settings) {
+        listener.addChangeListener(this);
         readInCandidates(settings);
     }
 
@@ -37,37 +42,37 @@ public class CandidateManager {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference candidateRef = db.child("candidates");
 
-        candidateRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                try {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        String id = snapshot.child("id").getValue().toString();
-                        String name = snapshot.child("name").getValue().toString();
-                        String hasWon = snapshot.child("hasWon").getValue().toString();
-                        String votesReceived = snapshot.child("votesReceived").getValue().toString();
+        candidateRef.addListenerForSingleValueEvent(listener);
+    }
 
-                        Candidate candidate = new Candidate(name, Integer.parseInt(id),
-                                Boolean.parseBoolean(hasWon), Integer.parseInt(votesReceived));
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        Log.d("candidateTesting", "Property Changed");
 
-                        candidates.add(candidate);
-                     //   Log.d("candidateTesting", "id: " + id);
-                     //   Log.d("candidateTesting", "name: " + name);
-                     //   Log.d("candidateTesting", "hasWon: " + hasWon);
-                     //   Log.d("candidateTesting", "votesReceived: " + votesReceived);
-                     //   Log.d("candidateTesting", " ");
-                    }
-                } catch (Exception e) {
-                    Log.d("candidateTesting", "NULL ERRORS");
-                }
-            }
+        if (evt.getPropertyName().equals("name")) {
+            String name = evt.getNewValue().toString();
+            Log.d("candidateTesting", "name: " + name);
+        }
+        if (evt.getPropertyName().equals("id")) {
+            String id = evt.getNewValue().toString();
+            Log.d("candidateTesting", "id: " + id);
+        }
+        if (evt.getPropertyName().equals("hasWon")) {
+            String hasWon = evt.getNewValue().toString();
+            Log.d("candidateTesting", "hasWon: " + hasWon);
+        }
+        if (evt.getPropertyName().equals("votesReceived")) {
+            String votesReceived = evt.getNewValue().toString();
+            Log.d("candidateTesting", "votesReceived: " + votesReceived);
+        }
+    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+    private void addCandidate(Candidate newCandidate) {
+        candidates.add(newCandidate);
+    }
 
-            }
-        });
-
+    public ArrayList<Candidate> getCandidates() {
+        return candidates;
     }
 
 }

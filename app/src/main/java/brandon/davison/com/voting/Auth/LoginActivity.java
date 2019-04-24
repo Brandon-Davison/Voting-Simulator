@@ -53,8 +53,6 @@ public class LoginActivity extends AppCompatActivity {
         });
         waitForSettings.start();
 
-        CandidateManager candidateManager = new CandidateManager(voteSettings);
-
         /* ---------------- OnClick Listeners for login and register */
 
         login_btn.setOnClickListener(new View.OnClickListener() {

@@ -7,7 +7,10 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import brandon.davison.com.voting.permissions.PermissionManager;
+import brandon.davison.com.voting.users.Candidate;
 import brandon.davison.com.voting.users.CandidateManager;
 import brandon.davison.com.voting.voting.VoteSettings;
 
@@ -31,10 +34,16 @@ public class MainActivity extends AppCompatActivity {
         int votesAvailable = intent.getIntExtra("votesAvailable", -1);
         int votesToWin = intent.getIntExtra("votesToWin", -1);
 
-       // VoteSettings voteSettings = new VoteSettings(Integer.parseInt(candidates),
-          //      Boolean.parseBoolean(started), Integer.parseInt(votesToWin), Integer.parseInt(votesAvailable));
-       // CandidateManager candidateManager = new CandidateManager(voteSettings);
+        VoteSettings voteSettings = new VoteSettings(candidates, started, votesAvailable, votesToWin);
 
+        CandidateManager candidateManager = new CandidateManager(voteSettings);
+
+        Log.d("candidateTesting", " " + candidateManager.getCandidates().size());
+
+
+        for (Candidate candidate : candidateManager.getCandidates()) {
+         //   Log.d("candidateTesting", candidate.getName());
+        }
     }
 
     private void setupViews() {
