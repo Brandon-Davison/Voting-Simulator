@@ -22,10 +22,12 @@ public class SettingEventListener implements ValueEventListener {
             String votesToWin = dataSnapshot.child("votesToWin").getValue().toString();
             String votesAvailable = dataSnapshot.child("votesAvailable").getValue().toString();
             String started = dataSnapshot.child("started").getValue().toString();
+            String candidates = dataSnapshot.child("candidates").getValue().toString();
 
             notifyListeners(this, "votesToWin", "0", votesToWin);
             notifyListeners(this, "votesAvailable", "0", votesAvailable);
             notifyListeners(this, "started", "false", started);
+            notifyListeners(this, "candidates", "0", candidates);
         } catch (Exception e) {
             Log.e("SettingTesting", "Type error from db");
         }

@@ -41,10 +41,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 while (voteSettings.getVotesToWin() == 0 || voteSettings.getVotesAvailable() == 0
-                    || voteSettings.getStartedWasChanged() == false) { }
+                    || voteSettings.getStartedWasChanged() == false || voteSettings.getCandidates() == 0) { }
                 //voteSettings.setStarted(true);
                 Log.d("SettingTesting", "Id test in run: " + voteSettings.getStarted()
-                        + ", " + voteSettings.getVotesToWin() + ", " + voteSettings.getVotesAvailable());
+                        + ", " + voteSettings.getVotesToWin() + ", " + voteSettings.getVotesAvailable() +
+                        ", " + voteSettings.getCandidates());
 
                 voterManager = new VoterManager(voteSettings);
             }

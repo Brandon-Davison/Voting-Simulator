@@ -22,8 +22,6 @@ public class VoterManager {
     private ArrayList<Voter> voters = new ArrayList<>();
 
     public VoterManager(VoteSettings settings) {
-        Log.d("idTesting", "Is started: " + settings.getStarted());
-
         if (!settings.getStarted()) { // start new election and generate login id keys
             generateIds(settings.getVotesAvailable());
         } else { // election is ongoing. Read in IDS from database
