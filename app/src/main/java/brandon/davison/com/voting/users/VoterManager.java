@@ -117,7 +117,7 @@ public class VoterManager {
 
     public Voter getVoter(String id) {
         for (Voter t : voters) {
-            if (t.getId().equals(id)) {
+            if (t.getId().substring(0, 5).equals(id)) {
                 return t;
             }
         }

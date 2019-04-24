@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         permissionManager.requestStoragePermission();
 
         Intent intent = getIntent();
-        final String voterId = intent.getStringExtra("voterID");
+        final String voterId = intent.getStringExtra("voterID").substring(0, 5);
         int candidates = intent.getIntExtra("candidates", -1);
         boolean started = intent.getBooleanExtra("started", true);
         int votesAvailable = intent.getIntExtra("votesAvailable", -1);
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         public void run() {
                             voterNameView.setText(voter.getName());
-                            voterIdView.setText(voter.getId());
+                            voterIdView.setText(voter.getId().substring(0, 5));
                         }
                     });
                 } else {
