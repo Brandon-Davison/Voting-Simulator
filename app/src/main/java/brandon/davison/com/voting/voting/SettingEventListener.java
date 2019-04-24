@@ -12,7 +12,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MySettingValueEventListener implements ValueEventListener {
+public class SettingEventListener implements ValueEventListener {
 
     private List<PropertyChangeListener> listener = new ArrayList<>();
 

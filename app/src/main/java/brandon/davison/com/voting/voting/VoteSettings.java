@@ -18,10 +18,10 @@ public class VoteSettings implements PropertyChangeListener {
     private boolean started, startedWasChanged = false;
     private HashMap<String, Object> model;
 
-    private MySettingValueEventListener settingValueEventListener;
+    private SettingEventListener settingValueEventListener;
 
     public VoteSettings() {
-        settingValueEventListener = new MySettingValueEventListener();
+        settingValueEventListener = new SettingEventListener();
         settingValueEventListener.addChangeListener(this);
         model = new HashMap<>();
 

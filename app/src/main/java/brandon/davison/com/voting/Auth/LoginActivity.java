@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import brandon.davison.com.voting.R;
+import brandon.davison.com.voting.users.VoterManager;
 import brandon.davison.com.voting.voting.VoteSettings;
 
 public class LoginActivity extends AppCompatActivity {
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("SettingTesting", "Id test in run: " + voteSettings.getStarted()
                         + ", " + voteSettings.getVotesToWin() + ", " + voteSettings.getVotesAvailable());
 
-                IdManager idManager = new IdManager(voteSettings);
+                VoterManager idManager = new VoterManager(voteSettings);
             }
         });
         waitForSettings.start();

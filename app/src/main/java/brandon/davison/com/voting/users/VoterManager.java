@@ -1,4 +1,4 @@
-package brandon.davison.com.voting.Auth;
+package brandon.davison.com.voting.users;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -13,19 +13,15 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import brandon.davison.com.voting.users.Voter;
+import brandon.davison.com.voting.voting.SettingEventListener;
 import brandon.davison.com.voting.voting.VoteSettings;
 
-public class IdManager {
+public class VoterManager {
 
     private ArrayList<String> ids = new ArrayList<>();
+    private ArrayList<Voter> voters = new ArrayList<>();
 
-    private MyIdValueEventListener listener;
-
-    public IdManager() {
-        listener = new MyIdValueEventListener();
-    }
-
-    public IdManager(VoteSettings settings) {
+    public VoterManager(VoteSettings settings) {
         Log.d("idTesting", "Is started: " + settings.getStarted());
 
         if (!settings.getStarted()) { // start new election and generate login id keys
@@ -51,14 +47,22 @@ public class IdManager {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot t: dataSnapshot.getChildren()) {
-                    //Log.d("idTesting", t.toString());
-                    Log.d("idTesting", t.getValue().toString());
-                    String password =  t.child("password").getValue().toString();
-                    String id = t.child("id").getValue().toString();
-                    String hasVoted = t.child("hasVoted").getValue().toString();
-                    String name = t.child("name").getValue().toString();
+                    try {
+                        Log.d("idTesting", t.getValue().toString());
+                        String password =  t.child("password").getValue().toString();
+                        String id = t.child("id").getValue().toString();
+                        String hasVoted = t.child("hasVoted").getValue().toString();
+                        String name = t.child("name").getValue().toString();
+
+
+                        Voter newVoter = new Voter(id, name, password, Boolean.parseBoolean(hasVoted));
+                        voters.add(newVoter);
+                    } catch (Exception e) {
+                        Log.d("idTesting", "NULL ERRORS");
+                    }
                 }
                 Log.d("idTesting", dataSnapshot.getValue().toString());
+                Log.d("idTesting", "Size: " + voters.size());
             }
 
             @Override
@@ -74,11 +78,19 @@ public class IdManager {
 
         for (int i = 0; i < numberIds; i++) {
             ids.add(UUID.randomUUID().toString());
-            Voter voter = new Voter(ids.get(i), "", "");
+            Voter voter = new Voter(ids.get(i), "", "", false);
             db.child(ids.get(i)).setValue(voter.getModel());
 
             Log.d("idTesting", "Id " + (i +1) + ": " + ids.get(i).toString());
         }
+    }
+
+    public ArrayList<Voter> getVoters() {
+        return voters;
+    }
+
+    public ArrayList<String> getIds() {
+        return ids;
     }
 
 }

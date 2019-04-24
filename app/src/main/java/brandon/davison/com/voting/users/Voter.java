@@ -13,19 +13,19 @@ public class Voter {
     // Used for database put and get calls
     private Map<String, Object> model;
 
-    public Voter(String id, String name, String password) {
+    public Voter(String id, String name, String password, boolean hasVoted) {
         model = new HashMap<>();
 
         this.id = id;
         this.name = name;
-        hasVoted = false;
+        this.hasVoted = hasVoted;
         this.password = password;
 
         // Update model
         model.put("id", id);
         model.put("name", name);
         model.put("password", password);
-        model.put("hasVoted", false);
+        model.put("hasVoted", hasVoted);
     }
 
     public String getId() {
