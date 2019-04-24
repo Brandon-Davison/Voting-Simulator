@@ -1,5 +1,6 @@
 package brandon.davison.com.voting;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,18 @@ public class MainActivity extends AppCompatActivity {
 
         PermissionManager permissionManager = new PermissionManager(getApplicationContext(), MainActivity.this);
         permissionManager.requestStoragePermission();
+
+        Intent intent = getIntent();
+        String voterId = intent.getStringExtra("voterID");
+        int candidates = intent.getIntExtra("candidates", -1);
+        boolean started = intent.getBooleanExtra("started", true);
+        int votesAvailable = intent.getIntExtra("votesAvailable", -1);
+        int votesToWin = intent.getIntExtra("votesToWin", -1);
+
+       // VoteSettings voteSettings = new VoteSettings(Integer.parseInt(candidates),
+          //      Boolean.parseBoolean(started), Integer.parseInt(votesToWin), Integer.parseInt(votesAvailable));
+       // CandidateManager candidateManager = new CandidateManager(voteSettings);
+
     }
 
     private void setupViews() {

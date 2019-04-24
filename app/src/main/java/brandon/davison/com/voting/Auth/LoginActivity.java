@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 // TODO: remove later (for testing purposes)
                 Intent intent2 = new Intent(LoginActivity.this, MainActivity.class);
-                intent2.putExtra("id", id);
+                intent2.putExtra("voteID", "6e1bea4e-c3dc-468c-b472-e687f2fa778d"); // TODO change
                 intent2.putExtra("candidates", voteSettings.getCandidates());
                 intent2.putExtra("started", voteSettings.getStarted());
                 intent2.putExtra("votesAvailable", voteSettings.getVotesAvailable());

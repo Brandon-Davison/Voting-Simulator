@@ -22,8 +22,7 @@ public class CandidateManager {
     }
 
     // Only used to insert dummy data into database
-
-    public void insertCandidates() {
+    private void insertCandidates() {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference candidateRef = db.child("candidates");
 
@@ -34,7 +33,7 @@ public class CandidateManager {
         candidateRef.child("2").setValue(hilary.getModel());
     }
 
-    public void readInCandidates(final VoteSettings settings) {
+    private void readInCandidates(final VoteSettings settings) {
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference candidateRef = db.child("candidates");
 
@@ -51,11 +50,12 @@ public class CandidateManager {
                         Candidate candidate = new Candidate(name, Integer.parseInt(id),
                                 Boolean.parseBoolean(hasWon), Integer.parseInt(votesReceived));
 
-                        Log.d("candidateTesting", "id: " + id);
-                        Log.d("candidateTesting", "name: " + name);
-                        Log.d("candidateTesting", "hasWon: " + hasWon);
-                        Log.d("candidateTesting", "votesReceived: " + votesReceived);
-                        Log.d("candidateTesting", " ");
+                        candidates.add(candidate);
+                     //   Log.d("candidateTesting", "id: " + id);
+                     //   Log.d("candidateTesting", "name: " + name);
+                     //   Log.d("candidateTesting", "hasWon: " + hasWon);
+                     //   Log.d("candidateTesting", "votesReceived: " + votesReceived);
+                     //   Log.d("candidateTesting", " ");
                     }
                 } catch (Exception e) {
                     Log.d("candidateTesting", "NULL ERRORS");
