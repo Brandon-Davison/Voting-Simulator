@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 id = register_id.getText().toString();
+                Log.d("idTesting", "Entered id: " + id);
             }
         });
 
@@ -81,6 +82,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 name = register_name.getText().toString();
+                Log.d("idTesting", "Entered name: " + name);
+
             }
         });
 
@@ -88,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 password = register_password.getText().toString();
+                Log.d("idTesting", "Entered password: " + password);
             }
         });
 
