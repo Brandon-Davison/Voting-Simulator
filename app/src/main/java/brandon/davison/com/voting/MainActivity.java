@@ -7,8 +7,6 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import brandon.davison.com.voting.permissions.PermissionManager;
 import brandon.davison.com.voting.users.Candidate;
 import brandon.davison.com.voting.users.CandidateManager;
@@ -19,7 +17,7 @@ import brandon.davison.com.voting.voting.VoteSettings;
 public class MainActivity extends AppCompatActivity {
 
     /* UI views */
-    private TextView voterName;
+    private TextView voterNameView, voterIdView;
 
     /* Non-UI variables */
 
@@ -55,30 +53,28 @@ public class MainActivity extends AppCompatActivity {
                 while (!candidateManager.getCandidatesReady()) { }
                 ready = true;
 
-
                 final Voter voter = voterManager.getVoter(voterId);
-                if (voter == null) {
-                    Toast.makeText(MainActivity.this, "Error, could not find voter", Toast.LENGTH_LONG).show();
+                if (voter != null) {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            voterNameView.setText(voter.getName());
+                            voterIdView.setText(voter.getId());
+                        }
+                    });
+                } else {
+                    Toast.makeText(MainActivity.this, "Error, could not find voter",
+                            Toast.LENGTH_LONG).show();
                     return;
                 }
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        voterName.setText(voter.getName());
-                    }
-                });
 
-
-//                voterName.setText(voterManager.getVoter(voterId).getName());
                 Log.d("candidateTesting", "Voter size: " + voterManager.getVoters().size());
                 Log.d("candidateTesting", "ID: " + voterId);
-
                 for (Candidate candidate : candidateManager.getCandidates()) {
                     Log.d("candidateTesting", "From Main");
                     Log.d("candidateTesting", candidate.getName());
                     Log.d("candidateTesting", " " + candidate.getid());
                     Log.d("candidateTesting", " " + candidate.getVotesReceived());
                     Log.d("candidateTesting", " " + candidate.hasWon());
-
                 }
             }
         });
@@ -86,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupViews() {
-        voterName = findViewById(R.id.voter_name);
+        voterNameView = findViewById(R.id.voter_name);
+        voterIdView = findViewById(R.id.voter_id);
     }
 }

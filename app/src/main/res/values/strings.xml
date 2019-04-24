@@ -12,6 +12,7 @@
     <string name="action_settings">Settings</string>
 
     <string name="voter_name">Voter Name</string>
-
+    <string name="voter_id">Voter ID</string>
+    <string name="submit_vote">Submit Vote</string>
 
 </resources>
