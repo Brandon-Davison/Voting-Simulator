@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button register_btn;
 
     // Non-UI variables
+    String id, name, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         waitForSettings.start();
-
-
 
         /* LoginActivity onClick listeners */
         login_id.setOnClickListener(new View.OnClickListener() {
@@ -74,35 +73,29 @@ public class LoginActivity extends AppCompatActivity {
         register_id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                id = register_id.getText().toString();
             }
         });
 
         register_name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-        });
-
-        register_id.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                name = register_name.getText().toString();
             }
         });
 
         register_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                password = register_password.getText().toString();
             }
         });
 
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // TODO: add code to setup user account then display a Toast msg that their
+                // TODO: account has been created
             }
         });
     }
