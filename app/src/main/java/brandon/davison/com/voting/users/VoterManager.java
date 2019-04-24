@@ -65,9 +65,11 @@ public class VoterManager {
 
     public boolean validCredentials(String id, String password) {
         for (int i = 0; i < voters.size(); i++) {
-
+            if (voters.get(i).getId().equals(id) && voters.get(i).getPassword().equals(password)) {
+                return true;
+            }
         }
-        return true;
+        return false;
     }
 
     // Read in generated ids from database

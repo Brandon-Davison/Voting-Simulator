@@ -1,5 +1,6 @@
 package brandon.davison.com.voting.Auth;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import brandon.davison.com.voting.MainActivity;
 import brandon.davison.com.voting.R;
 import brandon.davison.com.voting.users.VoterManager;
 import brandon.davison.com.voting.voting.VoteSettings;
@@ -56,6 +58,21 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String id = login_id.getText().toString();
                 String password = login_password.getText().toString();
+
+                if (id.equals("") || password.equals("")) {
+                    Toast.makeText(LoginActivity.this,
+                            "Please fill out all login forms", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if (voterManager.validCredentials(id, password)) {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);                    //intent.putExtra("id", id);
+                    intent.putExtra("id", id);
+
+                    Toast.makeText(LoginActivity.this, "successfully logged in",
+                            Toast.LENGTH_LONG).show();
+                    LoginActivity.this.startActivity(intent);
+                }
             }
         });
 
