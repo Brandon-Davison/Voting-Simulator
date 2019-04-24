@@ -58,23 +58,23 @@ public class CandidateManager implements PropertyChangeListener {
         if (evt.getPropertyName().equals("name")) {
             String name = evt.getNewValue().toString();
             candidates.get(currCandidateNumber).setName(name);
-            Log.d("candidateTesting", "name: " + name);
+         //   Log.d("candidateTesting", "name: " + name);
         }
         if (evt.getPropertyName().equals("id")) {
             int id = Integer.parseInt(evt.getNewValue().toString());
             candidates.get(currCandidateNumber).setId(id);
-            Log.d("candidateTesting", "id: " + id);
+        //    Log.d("candidateTesting", "id: " + id);
         }
         if (evt.getPropertyName().equals("hasWon")) {
             boolean hasWon = Boolean.valueOf(evt.getNewValue().toString());
             candidates.get(currCandidateNumber).setHasWon(hasWon);
             hasWonChanged = true;
-            Log.d("candidateTesting", "hasWon: " + hasWon);
+         //   Log.d("candidateTesting", "hasWon: " + hasWon);
         }
         if (evt.getPropertyName().equals("votesReceived")) {
             int votesReceived = Integer.valueOf(evt.getNewValue().toString());
             candidates.get(currCandidateNumber).setVotesReceived(votesReceived);
-            Log.d("candidateTesting", "votesReceived: " + votesReceived);
+         //   Log.d("candidateTesting", "votesReceived: " + votesReceived);
         }
 
         Candidate candidate = candidates.get(currCandidateNumber);
@@ -82,8 +82,8 @@ public class CandidateManager implements PropertyChangeListener {
             candidate.getVotesReceived() != -1 && hasWonChanged) {
             currCandidateNumber++;
             hasWonChanged = false;
-            Log.d("candidateTesting", "Candidate count & currNum: " + candidatesCount
-                + ", " + currCandidateNumber);
+           // Log.d("candidateTesting", "Candidate count & currNum: " + candidatesCount
+           //     + ", " + currCandidateNumber);
             if (currCandidateNumber == candidatesCount) {
                 candidatesReady = true;
             }

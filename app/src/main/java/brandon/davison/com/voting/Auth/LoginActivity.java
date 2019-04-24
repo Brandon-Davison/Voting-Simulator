@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final VoteSettings voteSettings = new VoteSettings();
 
-        // This is really bad but it works so oh well
+        // Thread waiting for candidates to be read in from database. (Bad practice way to do it, short on time)
         Thread waitForSettings = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 // TODO: remove later (for testing purposes)
                 Intent intent2 = new Intent(LoginActivity.this, MainActivity.class);
-                intent2.putExtra("voteID", "6e1bea4e-c3dc-468c-b472-e687f2fa778d"); // TODO change
+                intent2.putExtra("voterID", "6e1bea4e-c3dc-468c-b472-e687f2fa778d"); // TODO change
                 intent2.putExtra("candidates", voteSettings.getCandidates());
                 intent2.putExtra("started", voteSettings.getStarted());
                 intent2.putExtra("votesAvailable", voteSettings.getVotesAvailable());

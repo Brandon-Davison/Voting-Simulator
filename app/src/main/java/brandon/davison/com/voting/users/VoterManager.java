@@ -12,8 +12,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import brandon.davison.com.voting.users.Voter;
-import brandon.davison.com.voting.voting.SettingEventListener;
 import brandon.davison.com.voting.voting.VoteSettings;
 
 public class VoterManager {
@@ -21,6 +19,7 @@ public class VoterManager {
     private ArrayList<String> ids = new ArrayList<>();
     private ArrayList<Voter> voters = new ArrayList<>();
 
+    // change to Singleton class to prevent reading in from database upon each new activity (if time permits)
     public VoterManager(VoteSettings settings) {
         if (!settings.getStarted()) { // start new election and generate login id keys
             generateIds(settings.getVotesAvailable());
@@ -114,6 +113,15 @@ public class VoterManager {
 
             Log.d("idTesting", "Id " + (i + 1) + ": " + ids.get(i).toString());
         }
+    }
+
+    public Voter getVoter(String id) {
+        for (Voter t : voters) {
+            if (t.getId().equals(id)) {
+                return t;
+            }
+        }
+        return null;
     }
 
     public ArrayList<Voter> getVoters() {
