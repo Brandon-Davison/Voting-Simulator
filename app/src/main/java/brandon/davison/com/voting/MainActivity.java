@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     /* UI views */
     private TextView voterNameView, voterIdView;
     private Spinner spinner;
+    private Button submitVote;
 
     /* Non-UI variables */
 
@@ -89,11 +91,29 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         waitForCandidates.start();
+
+        submitVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int candidateId = spinnerListener.getId();
+
+                Candidate candidate = candidateManager.getCandidate(candidateId);
+
+                candidate.addVote();
+
+
+
+                Log.d("candidateTesting", "ID: " +candidateId);
+                Log.d("candidateTesting", "Name selected: " + candidate.getName());
+
+            }
+        });
     }
 
     private void setupViews() {
         voterNameView = findViewById(R.id.voter_name);
         voterIdView = findViewById(R.id.voter_id);
+        submitVote = findViewById(R.id.submit_vote);
 
         spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(spinnerListener);

@@ -45,7 +45,7 @@ public class Candidate {
     }
 
     // Adds vote and returns true if candidate won election
-    public void addVote(Voter voter) {
+    public void addVote() {
         votesReceived++;
     }
 

@@ -90,6 +90,15 @@ public class CandidateManager implements PropertyChangeListener {
         }
     }
 
+    public Candidate getCandidate(int id) {
+        for (Candidate candidate : candidates) {
+            if (candidate.getid() == id) {
+                return candidate;
+            }
+        }
+        return null;
+    }
+
     public boolean getCandidatesReady() {
         return candidatesReady;
     }
