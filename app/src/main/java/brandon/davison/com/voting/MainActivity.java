@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     // if Candidates have been read in from database yet
     private boolean ready = false;
+    private SpinnerListener spinnerListener = new SpinnerListener();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +94,9 @@ public class MainActivity extends AppCompatActivity {
     private void setupViews() {
         voterNameView = findViewById(R.id.voter_name);
         voterIdView = findViewById(R.id.voter_id);
-        spinner = findViewById(R.id.spinner);
 
+        spinner = findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(spinnerListener);
     }
 
     private void runCandidateDataTests(VoterManager voterManager, CandidateManager candidateManager, int voterId) {
