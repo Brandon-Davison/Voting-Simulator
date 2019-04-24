@@ -20,6 +20,16 @@ public class VoteSettings implements PropertyChangeListener {
 
     private SettingEventListener settingValueEventListener;
 
+    // Used when default constructor has already been used and settings are already known.
+    // Singleton pattern in Android is kinda weird and time is limited (can go back and change to
+    // singleton if time permits)
+    public VoteSettings(int candidates, boolean started, int votesToWin, int votesAvailable) {
+        this.candidates = candidates;
+        this.started = started;
+        this.votesToWin = votesToWin;
+        this.votesAvailable = votesAvailable;
+    }
+
     public VoteSettings() {
         settingValueEventListener = new SettingEventListener();
         settingValueEventListener.addChangeListener(this);

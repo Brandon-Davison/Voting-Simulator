@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import brandon.davison.com.voting.MainActivity;
 import brandon.davison.com.voting.R;
+import brandon.davison.com.voting.users.CandidateManager;
 import brandon.davison.com.voting.users.VoterManager;
 import brandon.davison.com.voting.voting.VoteSettings;
 
@@ -52,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         });
         waitForSettings.start();
 
+        CandidateManager candidateManager = new CandidateManager(voteSettings);
+
         /* ---------------- OnClick Listeners for login and register */
 
         login_btn.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +62,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String id = login_id.getText().toString();
                 String password = login_password.getText().toString();
+
+                // TODO: remove later (for testing purposes)
+                Intent intent2 = new Intent(LoginActivity.this, MainActivity.class);
+                intent2.putExtra("id", id);
+                intent2.putExtra("candidates", voteSettings.getCandidates());
+                intent2.putExtra("started", voteSettings.getStarted());
+                intent2.putExtra("votesAvailable", voteSettings.getVotesAvailable());
+                intent2.putExtra("votesToWin", voteSettings.getVotesToWin());
+                LoginActivity.this.startActivity(intent2);
 
                 if (id.equals("") || password.equals("")) {
                     Toast.makeText(LoginActivity.this,
