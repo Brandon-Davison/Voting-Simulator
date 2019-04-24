@@ -21,7 +21,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button register_btn;
 
     // Non-UI variables
-    IdManager idManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +34,19 @@ public class LoginActivity extends AppCompatActivity {
         Thread waitForSettings = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (voteSettings.getVotesToWin() == 0) { }
-                Log.d("SettingTesting", "Login Activity settings ready: ");
+                while (voteSettings.getVotesToWin() == 0 || voteSettings.getVotesAvailable() == 0
+                    || voteSettings.getStartedWasChanged() == false) { }
+                //voteSettings.setStarted(true);
+                Log.d("SettingTesting", "Id test in run: " + voteSettings.getStarted()
+                        + ", " + voteSettings.getVotesToWin() + ", " + voteSettings.getVotesAvailable());
 
-                idManager = new IdManager(voteSettings);
+                IdManager idManager = new IdManager(voteSettings);
             }
         });
         waitForSettings.start();
+
+
+
 
         /* LoginActivity onClick listeners */
         login_id.setOnClickListener(new View.OnClickListener() {

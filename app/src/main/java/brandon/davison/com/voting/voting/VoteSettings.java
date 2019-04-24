@@ -15,7 +15,7 @@ public class VoteSettings implements PropertyChangeListener {
     private Date[] dateRange;
 
     private int votesAvailable, votesToWin;
-    private boolean started;
+    private boolean started, startedWasChanged = false;
     private HashMap<String, Object> model;
 
     private MySettingValueEventListener settingValueEventListener;
@@ -40,8 +40,13 @@ public class VoteSettings implements PropertyChangeListener {
         }
         if (evt.getPropertyName().equals("started")) {
             started  = Boolean.valueOf(evt.getNewValue().toString());
+            startedWasChanged = true;
             Log.d("SettingTesting", "Property changed: " + started);
         }
+    }
+
+    public boolean getStartedWasChanged() {
+        return startedWasChanged;
     }
 
     private void readSettingsFromDb() {

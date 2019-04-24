@@ -1,9 +1,13 @@
 package brandon.davison.com.voting.Auth;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -15,7 +19,16 @@ public class IdManager {
 
     private ArrayList<String> ids = new ArrayList<>();
 
+    private MyIdValueEventListener listener;
+
+    public IdManager() {
+        listener = new MyIdValueEventListener();
+    }
+
     public IdManager(VoteSettings settings) {
+        Log.d("idTesting", "Is started: " + settings.getStarted());
+
+
         if (!settings.getStarted()) { // start new election and generate login id keys
             generateIds(settings.getVotesAvailable());
         } else { // election is ongoing. Read in IDS from database
@@ -33,10 +46,20 @@ public class IdManager {
     // Read in generated ids from database
     public void readIds(int numberIds) {
         Log.d("idTesting", "Reading IDS... ");
-        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("voters");
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference votersRef = db.child("settings");
 
+        votersRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("idTesting", "In read IDS");
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
     }
 
     // Generate login id keys and save them to database
