@@ -18,11 +18,15 @@ import brandon.davison.com.voting.voting.VoteSettings;
 
 public class CandidateManager implements PropertyChangeListener {
 
+    private static int currCandidateNumber = 0;
+    private boolean hasWonChanged = false, candidatesReady = false;
     private ArrayList<Candidate> candidates = new ArrayList<>();
     private CandidateEventListener listener = new CandidateEventListener();
+    private int candidatesCount = 0;
 
     public CandidateManager(VoteSettings settings) {
         listener.addChangeListener(this);
+        candidatesCount = settings.getCandidates();
         readInCandidates(settings);
     }
 
@@ -39,6 +43,10 @@ public class CandidateManager implements PropertyChangeListener {
     }
 
     private void readInCandidates(final VoteSettings settings) {
+        for (int i = 0; i < settings.getCandidates(); i++) {
+            candidates.add(new Candidate("", -1, false, -1));
+        }
+
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference candidateRef = db.child("candidates");
 
@@ -47,28 +55,43 @@ public class CandidateManager implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        Log.d("candidateTesting", "Property Changed");
-
         if (evt.getPropertyName().equals("name")) {
             String name = evt.getNewValue().toString();
+            candidates.get(currCandidateNumber).setName(name);
             Log.d("candidateTesting", "name: " + name);
         }
         if (evt.getPropertyName().equals("id")) {
-            String id = evt.getNewValue().toString();
+            int id = Integer.parseInt(evt.getNewValue().toString());
+            candidates.get(currCandidateNumber).setId(id);
             Log.d("candidateTesting", "id: " + id);
         }
         if (evt.getPropertyName().equals("hasWon")) {
-            String hasWon = evt.getNewValue().toString();
+            boolean hasWon = Boolean.valueOf(evt.getNewValue().toString());
+            candidates.get(currCandidateNumber).setHasWon(hasWon);
+            hasWonChanged = true;
             Log.d("candidateTesting", "hasWon: " + hasWon);
         }
         if (evt.getPropertyName().equals("votesReceived")) {
-            String votesReceived = evt.getNewValue().toString();
+            int votesReceived = Integer.valueOf(evt.getNewValue().toString());
+            candidates.get(currCandidateNumber).setVotesReceived(votesReceived);
             Log.d("candidateTesting", "votesReceived: " + votesReceived);
+        }
+
+        Candidate candidate = candidates.get(currCandidateNumber);
+        if (!candidate.getName().equals("") && candidate.getid() != -1 &&
+            candidate.getVotesReceived() != -1 && hasWonChanged) {
+            currCandidateNumber++;
+            hasWonChanged = false;
+            Log.d("candidateTesting", "Candidate count & currNum: " + candidatesCount
+                + ", " + currCandidateNumber);
+            if (currCandidateNumber == candidatesCount) {
+                candidatesReady = true;
+            }
         }
     }
 
-    private void addCandidate(Candidate newCandidate) {
-        candidates.add(newCandidate);
+    public boolean getCandidatesReady() {
+        return candidatesReady;
     }
 
     public ArrayList<Candidate> getCandidates() {

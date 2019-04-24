@@ -35,15 +35,24 @@ public class MainActivity extends AppCompatActivity {
         int votesToWin = intent.getIntExtra("votesToWin", -1);
 
         VoteSettings voteSettings = new VoteSettings(candidates, started, votesAvailable, votesToWin);
+        final CandidateManager candidateManager = new CandidateManager(voteSettings);
 
-        CandidateManager candidateManager = new CandidateManager(voteSettings);
+        // Thread waiting for candidates to be read in from database. (Bad practice way to do it, short on time)
+        Thread waitForCandidates = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!candidateManager.getCandidatesReady()) { }
+                for (Candidate candidate : candidateManager.getCandidates()) {
+                    Log.d("candidateTesting", "From Main");
+                    Log.d("candidateTesting", candidate.getName());
+                    Log.d("candidateTesting", " " + candidate.getid());
+                    Log.d("candidateTesting", " " + candidate.getVotesReceived());
+                    Log.d("candidateTesting", " " + candidate.hasWon());
 
-        Log.d("candidateTesting", " " + candidateManager.getCandidates().size());
-
-
-        for (Candidate candidate : candidateManager.getCandidates()) {
-         //   Log.d("candidateTesting", candidate.getName());
-        }
+                }
+            }
+        });
+        waitForCandidates.start();
     }
 
     private void setupViews() {

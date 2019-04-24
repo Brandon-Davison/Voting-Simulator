@@ -19,26 +19,22 @@ public class CandidateEventListener implements ValueEventListener {
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
         try {
-            try {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String id = snapshot.child("id").getValue().toString();
-                    String name = snapshot.child("name").getValue().toString();
-                    String hasWon = snapshot.child("hasWon").getValue().toString();
-                    String votesReceived = snapshot.child("votesReceived").getValue().toString();
+            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                String id = snapshot.child("id").getValue().toString();
+                String name = snapshot.child("name").getValue().toString();
+                String hasWon = snapshot.child("hasWon").getValue().toString();
+                String votesReceived = snapshot.child("votesReceived").getValue().toString();
 
-                    notifyListeners(this, "name", "", name);
-                    notifyListeners(this, "id", "", id);
-                    notifyListeners(this, "hasWon", "false", hasWon);
-                    notifyListeners(this, "votesReceived", "", votesReceived);
+                notifyListeners(this, "name", "", name);
+                notifyListeners(this, "id", "", id);
+                notifyListeners(this, "hasWon", "false", hasWon);
+                notifyListeners(this, "votesReceived", "", votesReceived);
 
-                    Candidate newCandidate = new Candidate(name, Integer.parseInt(id),
-                            Boolean.parseBoolean(hasWon), Integer.parseInt(votesReceived));
-                }
-            } catch (Exception e) {
-                Log.d("candidateTesting", "NULL ERRORS");
+                Candidate newCandidate = new Candidate(name, Integer.parseInt(id),
+                        Boolean.parseBoolean(hasWon), Integer.parseInt(votesReceived));
             }
         } catch (Exception e) {
-            Log.e("SettingTesting", "Type error from db");
+            Log.d("candidateTesting", "NULL ERRORS");
         }
     }
 

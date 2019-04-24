@@ -49,6 +49,23 @@ public class Candidate {
         votesReceived++;
     }
 
+    /* Setters */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setVotesReceived(int votesReceived) {
+        this.votesReceived = 0;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setHasWon(boolean hasWon) {
+        this.hasWon = hasWon;
+    }
+
     public HashMap<String, Object> getModel() {
         return model;
     }
