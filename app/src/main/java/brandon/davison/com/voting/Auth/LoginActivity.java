@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
 
         final VoteSettings voteSettings = new VoteSettings();
 
-        // This is really bad but it works so oh well for now practice
+        // This is really bad but it works so oh well
         Thread waitForSettings = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         waitForSettings.start();
-
 
 
 

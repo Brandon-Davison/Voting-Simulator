@@ -26,7 +26,6 @@ public class MySettingValueEventListener implements ValueEventListener {
             notifyListeners(this, "votesToWin", "0", votesToWin);
             notifyListeners(this, "votesAvailable", "0", votesAvailable);
             notifyListeners(this, "started", "false", started);
-            Log.d("SettingTesting", "Values from db: " + votesToWin + ", " + votesAvailable + ", " + started);
         } catch (Exception e) {
             Log.e("SettingTesting", "Type error from db");
         }

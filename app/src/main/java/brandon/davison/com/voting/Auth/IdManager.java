@@ -28,7 +28,6 @@ public class IdManager {
     public IdManager(VoteSettings settings) {
         Log.d("idTesting", "Is started: " + settings.getStarted());
 
-
         if (!settings.getStarted()) { // start new election and generate login id keys
             generateIds(settings.getVotesAvailable());
         } else { // election is ongoing. Read in IDS from database
@@ -45,14 +44,21 @@ public class IdManager {
 
     // Read in generated ids from database
     public void readIds(int numberIds) {
-        Log.d("idTesting", "Reading IDS... ");
         DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference votersRef = db.child("settings");
+        final DatabaseReference votersRef = db.child("voters");
 
         votersRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("idTesting", "In read IDS");
+                for (DataSnapshot t: dataSnapshot.getChildren()) {
+                    //Log.d("idTesting", t.toString());
+                    Log.d("idTesting", t.getValue().toString());
+                    String password =  t.child("password").getValue().toString();
+                    String id = t.child("id").getValue().toString();
+                    String hasVoted = t.child("hasVoted").getValue().toString();
+                    String name = t.child("name").getValue().toString();
+                }
+                Log.d("idTesting", dataSnapshot.getValue().toString());
             }
 
             @Override
