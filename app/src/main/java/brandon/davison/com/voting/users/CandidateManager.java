@@ -22,7 +22,7 @@ public class CandidateManager implements PropertyChangeListener {
     private boolean hasWonChanged = false, candidatesReady = false;
     private ArrayList<Candidate> candidates = new ArrayList<>();
     private CandidateEventListener listener = new CandidateEventListener();
-    private int candidatesCount = 0;
+    private int candidatesCount = 0, votesCasted = 0;
 
     public CandidateManager(VoteSettings settings) {
         listener.addChangeListener(this);
@@ -53,6 +53,18 @@ public class CandidateManager implements PropertyChangeListener {
         candidateRef.addListenerForSingleValueEvent(listener);
     }
 
+    public void updateCandidate(int id) {
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference candidateRef = db.child("candidates").child(Integer.toString(id));
+
+        for (Candidate candidate : candidates) {
+            if (candidate.getid() == id) {
+                candidateRef.updateChildren(candidate.getModel());
+            }
+        }
+
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("name")) {
@@ -74,6 +86,7 @@ public class CandidateManager implements PropertyChangeListener {
         if (evt.getPropertyName().equals("votesReceived")) {
             int votesReceived = Integer.valueOf(evt.getNewValue().toString());
             candidates.get(currCandidateNumber).setVotesReceived(votesReceived);
+            votesCasted += votesReceived;
          //   Log.d("candidateTesting", "votesReceived: " + votesReceived);
         }
 
@@ -97,6 +110,15 @@ public class CandidateManager implements PropertyChangeListener {
             }
         }
         return null;
+    }
+
+    public void castVote(int id) {
+        votesCasted++;
+        getCandidate(id).addVote();
+    }
+
+    public int getVotesCasted() {
+        return votesCasted;
     }
 
     public boolean getCandidatesReady() {

@@ -47,6 +47,7 @@ public class Candidate {
     // Adds vote and returns true if candidate won election
     public void addVote() {
         votesReceived++;
+        model.put("votesReceived", votesReceived);
     }
 
     /* Setters */
