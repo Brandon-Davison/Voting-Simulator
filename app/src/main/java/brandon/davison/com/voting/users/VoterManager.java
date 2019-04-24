@@ -31,11 +31,43 @@ public class VoterManager {
         }
     }
 
-    // Returns if an ID is in the list of generated IDS
-    public boolean isValidID(String id) {
-        if (ids.size() == 0) return false;
+    // Returns if a Voter can register
+    public boolean canRegister(String id) {
+        for (Voter voter : voters) {
+            if (voter.getId().equals(id) && voter.getPassword().equals("")) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-        return ids.contains(id);
+    // Set name and password for associated id
+    public void registerVoter(String id, String name, String password) {
+        for (int i = 0; i < voters.size(); i++) {
+            if (voters.get(i).getId().equals(id)) {
+                voters.get(i).setPassword(password);
+                voters.get(i).setName(name);
+            }
+        }
+        updateVoterInDb(id);
+    }
+
+    // Updates voters data in db
+    public void updateVoterInDb(String id) {
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference().child("voters");
+
+        for (int i = 0; i < voters.size(); i++) {
+            if (voters.get(i).getId().equals(id)) {
+                db.child(voters.get(i).getId()).updateChildren(voters.get(i).getModel());
+            }
+        }
+    }
+
+    public boolean validCredentials(String id, String password) {
+        for (int i = 0; i < voters.size(); i++) {
+
+        }
+        return true;
     }
 
     // Read in generated ids from database
@@ -53,7 +85,6 @@ public class VoterManager {
                         String id = t.child("id").getValue().toString();
                         String hasVoted = t.child("hasVoted").getValue().toString();
                         String name = t.child("name").getValue().toString();
-
 
                         Voter newVoter = new Voter(id, name, password, Boolean.parseBoolean(hasVoted));
                         voters.add(newVoter);
@@ -81,7 +112,7 @@ public class VoterManager {
             Voter voter = new Voter(ids.get(i), "", "", false);
             db.child(ids.get(i)).setValue(voter.getModel());
 
-            Log.d("idTesting", "Id " + (i +1) + ": " + ids.get(i).toString());
+            Log.d("idTesting", "Id " + (i + 1) + ": " + ids.get(i).toString());
         }
     }
 

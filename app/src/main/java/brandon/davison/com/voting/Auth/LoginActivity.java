@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import brandon.davison.com.voting.R;
 import brandon.davison.com.voting.users.VoterManager;
@@ -23,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // Non-UI variables
     String id, name, password;
+    VoterManager voterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,64 +44,43 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("SettingTesting", "Id test in run: " + voteSettings.getStarted()
                         + ", " + voteSettings.getVotesToWin() + ", " + voteSettings.getVotesAvailable());
 
-                VoterManager idManager = new VoterManager(voteSettings);
+                voterManager = new VoterManager(voteSettings);
             }
         });
         waitForSettings.start();
 
-        /* LoginActivity onClick listeners */
-        login_id.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        login_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        /* ---------------- OnClick Listeners for login and register */
 
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-        });
-
-        /* Register onClick listeners */
-        register_id.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                id = register_id.getText().toString();
-                Log.d("idTesting", "Entered id: " + id);
-            }
-        });
-
-        register_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name = register_name.getText().toString();
-                Log.d("idTesting", "Entered name: " + name);
-
-            }
-        });
-
-        register_password.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                password = register_password.getText().toString();
-                Log.d("idTesting", "Entered password: " + password);
+                String id = login_id.getText().toString();
+                String password = login_password.getText().toString();
             }
         });
 
         register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: add code to setup user account then display a Toast msg that their
-                // TODO: account has been created
+                String id = register_id.getText().toString();
+                String password = register_password.getText().toString();
+                String name = register_name.getText().toString();
+
+                if (id.equals("") || password.equals("") || name.equals("")) {
+                    Toast.makeText(LoginActivity.this,
+                            "Please fill out all register forms", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                Log.d("idTesting", "" + voterManager.canRegister(id));
+
+                if (voterManager.canRegister(id)) {
+                    voterManager.registerVoter(id, name, password);
+                    Toast.makeText(LoginActivity.this, "Account created", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Sorry, you can't register",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
     }

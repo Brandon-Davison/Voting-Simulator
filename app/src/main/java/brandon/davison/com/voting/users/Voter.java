@@ -54,6 +54,11 @@ public class Voter {
         model.put("password", password);
     }
 
+    public void setName(String name) {
+        this.name = name;
+        model.put("name", name);
+    }
+
     public Map<String, Object> getModel() {
         return model;
     }
