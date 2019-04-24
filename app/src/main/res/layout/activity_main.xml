@@ -68,13 +68,13 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <TextView
-        android:id="@+id/votes_available"
+        android:id="@+id/votes_casted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="33dp"
         android:layout_marginBottom="393dp"
-        android:text="Votes Available: "
+        android:text="Votes Casted: "
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,12 +93,63 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/submit_vote" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
+    <TextView
+        android:id="@+id/candidate1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="303dp" />
+        android:layout_marginStart="127dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginEnd="127dp"
+        android:layout_marginBottom="8dp"
+        android:text="candidate1_stats"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/candidate2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/votes_left" />
 
+    <TextView
+        android:id="@+id/candidate2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="127dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="127dp"
+        android:layout_marginBottom="19dp"
+        android:text="candidate2_stats"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/winner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/candidate1" />
+
+    <TextView
+        android:id="@+id/winner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="102dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="103dp"
+        android:layout_marginBottom="203dp"
+        android:text="Winner: To Be Determined"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/candidate2" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginBottom="15dp"
+        android:background="@android:color/background_dark"
+        app:layout_constraintBottom_toTopOf="@+id/votes_casted"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/submit_vote" />
 
 </android.support.constraint.ConstraintLayout>

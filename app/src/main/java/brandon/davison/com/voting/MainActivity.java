@@ -26,7 +26,7 @@ import brandon.davison.com.voting.voting.VoteSettings;
 public class MainActivity extends AppCompatActivity {
 
     /* UI views */
-    private TextView voterNameView, voterIdView;
+    private TextView voterNameView, voterIdView, votesCastedView, votesLeftView;
     private Spinner spinner;
     private Button submitVote;
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         final String voterId = intent.getStringExtra("voterID").substring(0, 5);
         final int candidates = intent.getIntExtra("candidates", -1);
         boolean started = intent.getBooleanExtra("started", true);
-        int votesAvailable = intent.getIntExtra("votesAvailable", -1);
+        final int votesAvailable = intent.getIntExtra("votesAvailable", -1);
         int votesToWin = intent.getIntExtra("votesToWin", -1);
 
         VoteSettings voteSettings = new VoteSettings(candidates, started, votesAvailable, votesToWin);
@@ -73,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
                             voterNameView.setText(voter.getName());
                             voterIdView.setText(voter.getId().substring(0, 5));
 
+                            // Set votes available and
+
+                            // Setup Candidate Spinner
                             List<String> names = new ArrayList<>();
                             for (Candidate candidate : candidateManager.getCandidates()) {
                                 names.add(candidate.getName());
@@ -98,13 +101,12 @@ public class MainActivity extends AppCompatActivity {
                 final int candidateId = spinnerListener.getId();
 
                 Candidate candidate = candidateManager.getCandidate(candidateId);
-
                 candidate.addVote();
-
-
 
                 Log.d("candidateTesting", "ID: " +candidateId);
                 Log.d("candidateTesting", "Name selected: " + candidate.getName());
+                Log.d("candidateTesting", "Name selected: " + candidate.getVotesReceived());
+
 
             }
         });
@@ -114,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
         voterNameView = findViewById(R.id.voter_name);
         voterIdView = findViewById(R.id.voter_id);
         submitVote = findViewById(R.id.submit_vote);
+        votesCastedView = findViewById(R.id.votes_casted);
+        votesLeftView = findViewById(R.id.votes_left);
 
         spinner = findViewById(R.id.spinner);
         spinner.setOnItemSelectedListener(spinnerListener);
